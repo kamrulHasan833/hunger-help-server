@@ -6,7 +6,7 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 
 // mongodb uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qoh5erv.mongodb.net/?retryWrites=true&w=majority`;
-
+console.log("hi");
 // connect to mongodb database
 const mongodbConfiguration = (app) => {
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
