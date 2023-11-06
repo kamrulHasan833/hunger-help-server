@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 // get all Foods
 const getAllFoods = async (req, res, collection) => {
   try {
@@ -57,6 +58,18 @@ const getFoodsByName = async (req, res, collection) => {
     res.status(500).send({ error: err });
   }
 };
+// get a single food by id
+const getSingleFood = async (req, res, collection) => {
+  const food_Id = req.params.id;
+  console.log("hi");
+  try {
+    const result = await collection.findOne({ _id: new ObjectId(food_Id) });
+
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send({ error: err });
+  }
+};
 
 module.exports = {
   getAllFoods,
@@ -64,4 +77,5 @@ module.exports = {
   getFoodsDescendingExpiry,
   getFoodsAscendingQuantity,
   getFoodsByName,
+  getSingleFood,
 };

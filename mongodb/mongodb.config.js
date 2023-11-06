@@ -11,7 +11,9 @@ const {
   getFoodsDescendingExpiry,
   getFoodsAscendingQuantity,
   getFoodsByName,
+  getSingleFood,
 } = require("../handlers/getHandlers");
+const { crateARequest } = require("../handlers/postHandler");
 // mongodb uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qoh5erv.mongodb.net/?retryWrites=true&w=majority`;
 console.log("hi");
@@ -29,6 +31,7 @@ const mongodbConfiguration = (app) => {
   async function run() {
     try {
       // create collections
+      const requestCollection = client.db("hunker-help").collection("request");
       const foodCollection = client.db("hunker-help").collection("foods");
       // get foods based on descending quantity
       app.get("/hunger-help/v1/foods", (req, res) => {
@@ -49,6 +52,14 @@ const mongodbConfiguration = (app) => {
       // get foods by food name
       app.get("/hunger-help/v1/foods/single", (req, res) => {
         getFoodsByName(req, res, foodCollection);
+      });
+      // get single food by id
+      app.get("/hunger-help/v1/foods/single/:id", (req, res) => {
+        getSingleFood(req, res, foodCollection);
+      });
+      // create a request
+      app.post("/hunger-help/v1/request-foods", (req, res) => {
+        crateARequest(req, res, requestCollection);
       });
       console.log(
         "Pinged your deployment. You successfully connected to MongoDB!"
