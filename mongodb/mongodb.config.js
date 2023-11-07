@@ -12,11 +12,14 @@ const {
   getFoodsAscendingQuantity,
   getFoodsByName,
   getSingleFood,
+  getRequestedFoods,
 } = require("../handlers/getHandlers");
-const { crateARequest } = require("../handlers/postHandler");
+
+const { addAFood, crateARequest } = require("../handlers/postHandler");
+const { deleteARequesedFood } = require("../handlers/deleteHandlers");
 // mongodb uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qoh5erv.mongodb.net/?retryWrites=true&w=majority`;
-console.log("hi");
+
 // connect to mongodb database
 const mongodbConfiguration = (app) => {
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -57,9 +60,23 @@ const mongodbConfiguration = (app) => {
       app.get("/hunger-help/v1/foods/single/:id", (req, res) => {
         getSingleFood(req, res, foodCollection);
       });
+      // get single food by id
+      app.get("/hunger-help/v1/request-foods", (req, res) => {
+        getRequestedFoods(req, res, requestCollection);
+      });
+      // create a request
+      app.post("/hunger-help/v1/foods", (req, res) => {
+        addAFood(req, res, foodCollection);
+      });
+
       // create a request
       app.post("/hunger-help/v1/request-foods", (req, res) => {
         crateARequest(req, res, requestCollection);
+      });
+      // delete a request
+      app.delete("/hunger-help/v1/request-foods/:id", (req, res) => {
+        deleteARequesedFood(req, res, requestCollection);
+        console.log("hi");
       });
       console.log(
         "Pinged your deployment. You successfully connected to MongoDB!"

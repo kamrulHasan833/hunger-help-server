@@ -70,7 +70,21 @@ const getSingleFood = async (req, res, collection) => {
     res.status(500).send({ error: err });
   }
 };
+// get requested foods
+const getRequestedFoods = async (req, res, collection) => {
+  const user_email = req.query.email;
 
+  try {
+    const cursor = collection.find({
+      user_email: user_email,
+    });
+    const result = await cursor.toArray();
+
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send({ error: err });
+  }
+};
 module.exports = {
   getAllFoods,
   getFoodsDescendingQuantity,
@@ -78,4 +92,5 @@ module.exports = {
   getFoodsAscendingQuantity,
   getFoodsByName,
   getSingleFood,
+  getRequestedFoods,
 };
