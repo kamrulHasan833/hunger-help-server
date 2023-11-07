@@ -16,7 +16,8 @@ const {
   getAllOfAUser,
 } = require("../handlers/getHandlers");
 
-const { addAFood, crateARequest } = require("../handlers/postHandler");
+const { addAFood, crateARequest } = require("../handlers/postHandlers");
+const { updateAFood } = require("../handlers/uadateHandlers");
 const {
   deleteAFood,
   deleteARequesedFood,
@@ -76,6 +77,10 @@ const mongodbConfiguration = (app) => {
       app.post("/hunger-help/v1/foods", (req, res) => {
         addAFood(req, res, foodCollection);
       });
+      // create a request
+      app.put("/hunger-help/v1/foods/users/:id", (req, res) => {
+        updateAFood(req, res, foodCollection);
+      });
       // delete a food
       app.delete("/hunger-help/v1/foods/users/:id", (req, res) => {
         deleteAFood(req, res, foodCollection, requestCollection);
@@ -85,6 +90,7 @@ const mongodbConfiguration = (app) => {
       app.post("/hunger-help/v1/request-foods", (req, res) => {
         crateARequest(req, res, requestCollection);
       });
+
       // delete a request
       app.delete("/hunger-help/v1/request-foods/:id", (req, res) => {
         deleteARequesedFood(req, res, requestCollection);
