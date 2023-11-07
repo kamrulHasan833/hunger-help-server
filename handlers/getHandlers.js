@@ -10,6 +10,20 @@ const getAllFoods = async (req, res, collection) => {
     res.status(500).send({ error: err });
   }
 };
+// get all foods of user
+const getAllOfAUser = async (req, res, collection) => {
+  const email = req.query.email;
+  try {
+    const cursor = collection.find({
+      "donator.email": email,
+    });
+    const result = await cursor.toArray();
+
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send({ error: err });
+  }
+};
 // get foods based on higher quantity
 const getFoodsDescendingQuantity = async (req, res, collection) => {
   try {
@@ -61,7 +75,7 @@ const getFoodsByName = async (req, res, collection) => {
 // get a single food by id
 const getSingleFood = async (req, res, collection) => {
   const food_Id = req.params.id;
-  console.log("hi");
+
   try {
     const result = await collection.findOne({ _id: new ObjectId(food_Id) });
 
@@ -93,4 +107,5 @@ module.exports = {
   getFoodsByName,
   getSingleFood,
   getRequestedFoods,
+  getAllOfAUser,
 };

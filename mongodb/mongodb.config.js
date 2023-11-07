@@ -13,10 +13,14 @@ const {
   getFoodsByName,
   getSingleFood,
   getRequestedFoods,
+  getAllOfAUser,
 } = require("../handlers/getHandlers");
 
 const { addAFood, crateARequest } = require("../handlers/postHandler");
-const { deleteARequesedFood } = require("../handlers/deleteHandlers");
+const {
+  deleteAFood,
+  deleteARequesedFood,
+} = require("../handlers/deleteHandlers");
 // mongodb uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qoh5erv.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -39,6 +43,10 @@ const mongodbConfiguration = (app) => {
       // get foods based on descending quantity
       app.get("/hunger-help/v1/foods", (req, res) => {
         getAllFoods(req, res, foodCollection);
+      });
+      // get all foods of a user
+      app.get("/hunger-help/v1/foods/users", (req, res) => {
+        getAllOfAUser(req, res, foodCollection);
       });
       // get foods based on descending quantity
       app.get("/hunger-help/v1/foods/descending-quatity", (req, res) => {
@@ -64,9 +72,13 @@ const mongodbConfiguration = (app) => {
       app.get("/hunger-help/v1/request-foods", (req, res) => {
         getRequestedFoods(req, res, requestCollection);
       });
-      // create a request
+      // create a food
       app.post("/hunger-help/v1/foods", (req, res) => {
         addAFood(req, res, foodCollection);
+      });
+      // delete a food
+      app.delete("/hunger-help/v1/foods/users/:id", (req, res) => {
+        deleteAFood(req, res, foodCollection, requestCollection);
       });
 
       // create a request
@@ -76,7 +88,6 @@ const mongodbConfiguration = (app) => {
       // delete a request
       app.delete("/hunger-help/v1/request-foods/:id", (req, res) => {
         deleteARequesedFood(req, res, requestCollection);
-        console.log("hi");
       });
       console.log(
         "Pinged your deployment. You successfully connected to MongoDB!"
