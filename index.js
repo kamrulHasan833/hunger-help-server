@@ -1,9 +1,13 @@
-// import external modules
+// import externals
 const express = require("express");
 const cors = require("cors");
 const mongodbConfiguration = require("./mongodb/mongodb.config");
 const dotenv = require("dotenv");
+const cookie_parser = require("cookie-parser");
 
+// import internals
+const create_jwt = require("./handlers/create_jwt");
+const remove_jwt_token = require("./handlers/remove_jwt_token");
 // create express app
 const app = express();
 
@@ -15,12 +19,22 @@ dotenv.config();
 
 // external middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
+app.use(cookie_parser());
 
 // create routes or apis
 app.get("/", (req, res) => {
   res.send("Hunker Help server is running...");
 });
+// create jsonwebtoken and pass it client cookie
+app.post("/jsonwebtoken", create_jwt);
+// remove cookie
+app.delete("/signout", remove_jwt_token);
 
 // connect mongodb database
 mongodbConfiguration(app);
