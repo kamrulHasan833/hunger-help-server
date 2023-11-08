@@ -14,10 +14,11 @@ const {
   getSingleFood,
   getRequestedFoods,
   getAllOfAUser,
+  getRequestedFoodsById,
 } = require("../handlers/getHandlers");
 
 const { addAFood, crateARequest } = require("../handlers/postHandlers");
-const { updateAFood } = require("../handlers/uadateHandlers");
+const { updateAFood, updateFoodStatus } = require("../handlers/uadateHandlers");
 const {
   deleteAFood,
   deleteARequesedFood,
@@ -69,10 +70,15 @@ const mongodbConfiguration = (app) => {
       app.get("/hunger-help/v1/foods/single/:id", (req, res) => {
         getSingleFood(req, res, foodCollection);
       });
-      // get single food by id
+      // get all request food of a user
       app.get("/hunger-help/v1/request-foods", (req, res) => {
         getRequestedFoods(req, res, requestCollection);
       });
+      // get all request food under a id
+      app.get("/hunger-help/v1/request-foods/users/:id", (req, res) => {
+        getRequestedFoodsById(req, res, requestCollection);
+      });
+
       // create a food
       app.post("/hunger-help/v1/foods", (req, res) => {
         addAFood(req, res, foodCollection);
@@ -89,6 +95,10 @@ const mongodbConfiguration = (app) => {
       // create a request
       app.post("/hunger-help/v1/request-foods", (req, res) => {
         crateARequest(req, res, requestCollection);
+      });
+      // update food status
+      app.put("/hunger-help/v1/request-foods/:id", (req, res) => {
+        updateFoodStatus(req, res, requestCollection, foodCollection);
       });
 
       // delete a request
