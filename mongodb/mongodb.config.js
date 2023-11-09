@@ -23,7 +23,8 @@ const {
   deleteAFood,
   deleteARequesedFood,
 } = require("../handlers/deleteHandlers");
-const auth_guard = require("../middlewares/authentication/auth_guard");
+
+// const authGuard = require("../middlewares/authentication/auth_guard");
 
 // mongodb uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qoh5erv.mongodb.net/?retryWrites=true&w=majority`;
@@ -49,7 +50,7 @@ const mongodbConfiguration = (app) => {
         getAllFoods(req, res, foodCollection);
       });
       // get all foods of a user
-      app.get("/hunger-help/v1/foods/users", auth_guard, (req, res) => {
+      app.get("/hunger-help/v1/foods/users", (req, res) => {
         getAllOfAUser(req, res, foodCollection);
       });
       // get foods based on descending quantity
@@ -69,52 +70,52 @@ const mongodbConfiguration = (app) => {
         getFoodsAscendingQuantity(req, res, foodCollection);
       });
       // get foods by food name
-      app.get("/hunger-help/v1/foods/single", auth_guard, (req, res) => {
+      app.get("/hunger-help/v1/foods/single", (req, res) => {
         getFoodsByName(req, res, foodCollection);
       });
       // get single food by id
-      app.get("/hunger-help/v1/foods/single/:id", auth_guard, (req, res) => {
+      app.get("/hunger-help/v1/foods/single/:id", (req, res) => {
         getSingleFood(req, res, foodCollection);
       });
       // get all request food of a user
-      app.get("/hunger-help/v1/request-foods", auth_guard, (req, res) => {
+      app.get("/hunger-help/v1/request-foods", (req, res) => {
         getRequestedFoods(req, res, requestCollection);
       });
       // get all request food under a id
       app.get(
         "/hunger-help/v1/request-foods/users/:id",
-        auth_guard,
+
         (req, res) => {
           getRequestedFoodsById(req, res, requestCollection);
         }
       );
 
       // create a food
-      app.post("/hunger-help/v1/foods", auth_guard, (req, res) => {
+      app.post("/hunger-help/v1/foods", (req, res) => {
         addAFood(req, res, foodCollection);
       });
       // create a request
-      app.put("/hunger-help/v1/foods/users/:id", auth_guard, (req, res) => {
+      app.put("/hunger-help/v1/foods/users/:id", (req, res) => {
         updateAFood(req, res, foodCollection);
       });
       // delete a food
-      app.delete("/hunger-help/v1/foods/users/:id", auth_guard, (req, res) => {
+      app.delete("/hunger-help/v1/foods/users/:id", (req, res) => {
         deleteAFood(req, res, foodCollection, requestCollection);
       });
 
       // create a request
-      app.post("/hunger-help/v1/request-foods", auth_guard, (req, res) => {
+      app.post("/hunger-help/v1/request-foods", (req, res) => {
         crateARequest(req, res, requestCollection);
       });
       // update food status
-      app.put("/hunger-help/v1/request-foods/:id", auth_guard, (req, res) => {
+      app.put("/hunger-help/v1/request-foods/:id", (req, res) => {
         updateFoodStatus(req, res, requestCollection, foodCollection);
       });
 
       // delete a request
       app.delete(
         "/hunger-help/v1/request-foods/:id",
-        auth_guard,
+
         (req, res) => {
           deleteARequesedFood(req, res, requestCollection);
         }

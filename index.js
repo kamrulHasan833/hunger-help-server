@@ -17,15 +17,20 @@ const port = process.env.PORT || 5000;
 // configure dotenv
 dotenv.config();
 
+app.use(cookie_parser());
+
 // external middlewares
 app.use(express.json());
+
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: "http://localhost:5173",
     credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+
+    optionsSuccessStatus: 200,
   })
 );
-app.use(cookie_parser());
 
 // create routes or apis
 app.get("/", (req, res) => {
