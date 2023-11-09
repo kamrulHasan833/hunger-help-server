@@ -7,4 +7,5 @@ const remove_jwt_token = (req, res) => {
     })
     .send({ success: true });
 };
+
 module.exports = remove_jwt_token;

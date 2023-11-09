@@ -21,5 +21,5 @@ const create_jwt = (req, res) => {
     res.status(500).send({ error: err });
   }
 };
-console.log("hi");
+
 module.exports = create_jwt;
