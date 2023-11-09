@@ -8,7 +8,7 @@ const auth_guard = async (req, res, next) => {
       req.user = user;
       next();
     } else {
-      res.status(401).send({ error: "unathorize access." });
+      res.status(403).send({ error: "forbidden access." });
     }
   } else {
     res.status(401).send({ error: "unathorize access." });

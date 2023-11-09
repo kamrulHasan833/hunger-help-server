@@ -24,7 +24,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://hunger-help.web.app",
+    origin: [
+      "http://localhost:5173",
+      "https://phenomenal-stardust-ce9e22.netlify.app",
+    ],
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200,
