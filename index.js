@@ -24,10 +24,9 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://hunger-help.web.app",
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-
     optionsSuccessStatus: 200,
   })
 );

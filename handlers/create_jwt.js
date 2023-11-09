@@ -8,12 +8,11 @@ const create_jwt = (req, res) => {
       });
 
       res
-        .cookie("jwt_token", token, {
+        .cookie("token", token, {
           httpOnly: true,
-          secure: false,
-          sameSite: false,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         })
-        .status(200)
         .send({ success: true });
     } else {
       res.status("401").send({ error: "unauthorized request!" });
