@@ -14,4 +14,5 @@ const auth_guard = async (req, res, next) => {
     res.status(401).send({ error: "unathorize access." });
   }
 };
+
 module.exports = auth_guard;

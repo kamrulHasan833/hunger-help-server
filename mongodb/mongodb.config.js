@@ -39,7 +39,7 @@ const mongodbConfiguration = (app) => {
       deprecationErrors: true,
     },
   });
-  console.log("hi");
+
   async function run() {
     try {
       // create collections
