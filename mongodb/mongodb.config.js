@@ -70,7 +70,7 @@ const mongodbConfiguration = (app) => {
         getFoodsAscendingQuantity(req, res, foodCollection);
       });
       // get foods by food name
-      app.get("/hunger-help/v1/foods/single", authGuard, (req, res) => {
+      app.get("/hunger-help/v1/foods/single", (req, res) => {
         getFoodsByName(req, res, foodCollection);
       });
       // get single food by id

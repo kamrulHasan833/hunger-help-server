@@ -29,8 +29,6 @@ app.use(
       "https://phenomenal-stardust-ce9e22.netlify.app",
     ],
     credentials: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    optionsSuccessStatus: 200,
   })
 );
 
